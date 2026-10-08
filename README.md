@@ -210,6 +210,25 @@ Errors always come back as `{ error }` or `{ errors: { field: message } }` so fo
 
 ---
 
+## Deploy (public website link)
+
+The app is **Render-ready** — `render.yaml` describes the whole service, so the live link takes ~3 minutes:
+
+1. Sign in at **https://dashboard.render.com** with your GitHub account
+2. **New → Blueprint** → connect `futurebilliniors/last-minute-revision-assistant`
+3. Render detects `render.yaml` → press **Apply** (pins Node 24, builds Vite, starts Express, generates `JWT_SECRET`)
+4. Your site goes live at `https://last-minute-revision-assistant-xxxx.onrender.com`
+
+Notes:
+
+- `GET /api/health` is the health check path, so a failed boot shows immediately in the deploy log.
+- SQLite lives in `DATA_DIR` (default `server/data/`) — on Render's free plan the disk is **ephemeral**:
+  a redeploy wipes user data, but the **demo account re-seeds automatically on boot** (and anyone can register).
+- Never set `AI_API_KEY`/`VITE_*` secrets in the frontend build — the offline engine is the default; a real
+  model key, if you ever add one, belongs in the service's **server-side** environment variables only.
+
+---
+
 ## Project layout
 
 ```

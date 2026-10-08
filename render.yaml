@@ -1,0 +1,18 @@
+# Render Blueprint — one-click deploy.
+# Dashboard → New → Blueprint → pick this repo; Render reads this file.
+services:
+  - type: web
+    name: last-minute-revision-assistant
+    runtime: node
+    plan: free
+    # node:sqlite (DatabaseSync) requires Node >= 22.5; pin 24 to match dev.
+    buildCommand: npm ci --include=dev && npm run build
+    startCommand: npm start
+    healthCheckPath: /api/health
+    envVars:
+      - key: NODE_VERSION
+        value: "24"
+      - key: NODE_ENV
+        value: production
+      - key: JWT_SECRET
+        generateValue: true
