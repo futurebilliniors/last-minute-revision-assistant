@@ -1,0 +1,210 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ============================================================
+   Theme tokens — consumed by tailwind.config.js as
+   rgb(var(--name) / <alpha-value>). Flip via .dark on <html>.
+   ============================================================ */
+:root {
+  color-scheme: light;
+  --surface: 255 255 255; --night: 15 18 35;
+  --ink-50: 246 247 251; --ink-100: 236 238 246; --ink-200: 213 217 234;
+  --ink-300: 176 184 212; --ink-400: 100 109 149; --ink-500: 93 103 145;
+  --ink-600: 81 90 135; --ink-700: 67 73 110; --ink-800: 58 63 92;
+  --ink-900: 15 18 35; --ink-950: 8 10 22;
+  --brand-50: 238 244 255; --brand-100: 218 230 255; --brand-200: 189 210 255;
+  --brand-700: 27 56 181; --brand-800: 28 51 143; --brand-900: 29 48 113;
+  --critical: 220 38 38; --high: 194 65 12; --medium: 161 98 7; --low: 21 128 61;
+  --red-50: 254 242 242; --red-100: 254 226 226; --red-200: 254 202 202;
+  --red-600: 220 38 38; --red-700: 185 28 28; --red-800: 153 27 27; --red-900: 127 29 29;
+  --orange-50: 255 247 237; --orange-100: 255 237 213; --orange-200: 254 215 170;
+  --orange-600: 234 88 12; --orange-700: 194 65 12; --orange-800: 154 52 18; --orange-900: 124 45 18;
+  --yellow-50: 254 252 232; --yellow-100: 254 249 195; --yellow-200: 254 240 138;
+  --yellow-600: 202 138 4; --yellow-700: 161 98 7; --yellow-800: 133 77 14; --yellow-900: 113 63 18;
+  --green-50: 240 253 244; --green-100: 220 252 231; --green-200: 187 247 208;
+  --green-600: 22 163 74; --green-700: 21 128 61; --green-800: 22 101 52; --green-900: 20 83 45;
+  --chart-track: 236 238 246; --chart-axis: 176 184 212;
+  --chart-label: 15 18 35; --chart-dot: 255 255 255; --chart-muted: 133 144 185;
+  --btn-primary: 33 71 224; --btn-primary-hover: 27 56 181;
+  --btn-danger: 185 28 28; --btn-danger-hover: 153 27 27;
+}
+
+.dark {
+  color-scheme: dark;
+  --surface: 22 26 46; --night: 9 11 22;
+  --ink-50: 12 14 28; --ink-100: 30 34 56; --ink-200: 46 51 80;
+  --ink-300: 72 79 112; --ink-400: 148 156 196; --ink-500: 168 175 210;
+  --ink-600: 191 197 226; --ink-700: 214 218 238; --ink-800: 233 236 249;
+  --ink-900: 243 245 253; --ink-950: 8 10 20;
+  --brand-50: 22 30 62; --brand-100: 30 42 88; --brand-200: 47 64 128;
+  --brand-700: 151 180 255; --brand-800: 184 204 255; --brand-900: 216 228 255;
+  --critical: 248 113 113; --high: 251 146 60; --medium: 251 191 36; --low: 74 222 128;
+  --red-50: 44 21 24; --red-100: 58 27 31; --red-200: 91 38 45;
+  --red-600: 248 113 113; --red-700: 252 165 165; --red-800: 254 202 202; --red-900: 254 226 226;
+  --orange-50: 48 30 16; --orange-100: 66 40 20; --orange-200: 106 55 24;
+  --orange-600: 251 146 60; --orange-700: 253 186 116; --orange-800: 254 215 170; --orange-900: 255 237 213;
+  --yellow-50: 44 38 14; --yellow-100: 60 51 18; --yellow-200: 95 81 24;
+  --yellow-600: 251 191 36; --yellow-700: 253 230 138; --yellow-800: 254 240 138; --yellow-900: 254 249 195;
+  --green-50: 17 38 26; --green-100: 22 50 33; --green-200: 30 78 49;
+  --green-600: 74 222 128; --green-700: 134 239 172; --green-800: 187 247 208; --green-900: 220 252 231;
+  --chart-track: 36 41 66; --chart-axis: 120 128 165;
+  --chart-label: 243 245 253; --chart-dot: 22 26 46; --chart-muted: 148 156 196;
+  --btn-primary: 45 84 240; --btn-primary-hover: 33 71 224;
+  --btn-danger: 220 38 38; --btn-danger-hover: 185 28 28;
+}
+
+@layer base {
+  * {
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-ink-50 text-ink-900 antialiased;
+    font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
+  }
+
+  ::selection {
+    @apply bg-brand-200 text-ink-900;
+  }
+
+  h1, h2, h3, h4 {
+    @apply tracking-tight;
+  }
+
+  /* Accessible focus ring everywhere */
+  :focus-visible {
+    outline: 2px solid theme('colors.brand.500');
+    outline-offset: 2px;
+    border-radius: 6px;
+  }
+}
+
+@layer components {
+  .card {
+    @apply rounded-2xl border border-ink-100 bg-surface shadow-card;
+  }
+
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-xl px-4 py-2.5 text-sm font-semibold
+           transition-all duration-150 disabled:cursor-not-allowed disabled:opacity-50
+           active:scale-[.98];
+  }
+
+  /* Solid buttons keep an explicit (non-flipping) pair so white text
+     always clears contrast, in both themes. */
+  .btn-primary {
+    @apply btn text-white shadow-[0_8px_20px_-10px_rgba(33,71,224,.9)];
+    background: rgb(var(--btn-primary));
+  }
+  .btn-primary:hover:not(:disabled) {
+    background: rgb(var(--btn-primary-hover));
+  }
+
+  .btn-ghost {
+    @apply btn border border-ink-200 bg-surface text-ink-700 hover:border-ink-300 hover:bg-ink-50;
+  }
+
+  .btn-danger {
+    @apply btn text-white;
+    background: rgb(var(--btn-danger));
+  }
+  .btn-danger:hover:not(:disabled) {
+    background: rgb(var(--btn-danger-hover));
+  }
+
+  .btn-dark {
+    @apply btn text-white;
+    background: rgb(var(--night));
+  }
+  .btn-dark:hover:not(:disabled) {
+    filter: brightness(1.45);
+  }
+
+  .field {
+    @apply w-full rounded-xl border border-ink-200 bg-surface px-3.5 py-2.5 text-sm text-ink-900
+           placeholder:text-ink-400 transition focus:border-brand-400 focus:ring-4 focus:ring-brand-100;
+  }
+
+  .field-error {
+    @apply border-critical focus:border-critical focus:ring-red-100;
+  }
+
+  .label {
+    @apply mb-1.5 block text-[13px] font-semibold text-ink-700;
+  }
+
+  .hint {
+    @apply mt-1.5 text-xs text-ink-500;
+  }
+
+  .error-text {
+    @apply mt-1.5 flex items-center gap-1.5 text-xs font-medium text-critical;
+  }
+
+  .chip {
+    @apply inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-[11px] font-bold uppercase tracking-wide;
+  }
+
+  .skeleton {
+    @apply rounded-lg bg-gradient-to-r from-ink-100 via-ink-50 to-ink-100 bg-[length:400px_100%] animate-shimmer;
+  }
+}
+
+/* ---------- scrollbars ---------- */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-thumb {
+  @apply rounded-full bg-ink-200;
+  border: 3px solid transparent;
+  background-clip: content-box;
+}
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-ink-300;
+}
+
+/* ---------- priority accents ---------- */
+.p-critical { --p: #ef4444; }
+.p-high     { --p: #f97316; }
+.p-medium   { --p: #eab308; }
+.p-low      { --p: #22c55e; }
+
+.dark .p-critical { --p: #f87171; }
+.dark .p-high     { --p: #fb923c; }
+.dark .p-medium   { --p: #fbbf24; }
+.dark .p-low      { --p: #4ade80; }
+
+.priority-bar::before {
+  content: '';
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 4px;
+  border-radius: 4px 0 0 4px;
+  background: var(--p, rgb(var(--ink-500)));
+}
+
+/* ---------- reveal on scroll ---------- */
+.reveal {
+  opacity: 0;
+  transform: translateY(14px);
+  transition: opacity .5s cubic-bezier(.22,1,.36,1), transform .5s cubic-bezier(.22,1,.36,1);
+}
+.reveal.in {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
+  }
+  .reveal { opacity: 1; transform: none; }
+}
